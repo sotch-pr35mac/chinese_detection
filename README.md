@@ -14,7 +14,7 @@ use chinese_detection::ChineseDetection;
 let language_detection = ChineseDetection::new();
 
 println!("{}", language_detection.classify(String::from("test"))); // --> EN
-println!("{}", language_detection.classify(String::from*("shiyan"))); // --> PY
+println!("{}", language_detection.classify(String::from("shiyan"))); // --> PY
 println!("{}", language_detection.classify(String::from("实验"))); // --> ZH
 ```
 
