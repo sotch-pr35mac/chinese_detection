@@ -1,8 +1,6 @@
-/*
- * @author	:: Preston Wang-Stosur-Bassett <http://stosur.info>
- * @date	:: May 5, 2020
- * @description	:: Classify a string as either English, Chinese, or Pinyin.
-*/
+// @author	:: Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>
+// @date	:: May 5, 2020
+// @description	:: Classify a string as either English, Chinese, or Pinyin.
 
 //! ### About
 //! Classify a string as either English, Chinese, or Pinyin.
@@ -12,17 +10,19 @@
 //! extern crate chinese_detection;
 //! 
 //! use chinese_detection::ChineseDetection;
+//! use chinese_detection::ClassificationResult;
 //! 
 //! let language_detection = ChineseDetection::new();
 //!
-//! println!("{}", language_detection.classify(String::from("test"))); // --> EN
-//! println!("{}", language_detection.classify(String::from("shiyan"))); // --> PY
-//! println!("{}", language_detection.classify(String::from("实验"))); // --> ZH
+//! println!("{:?}", language_detection.classify("test")); // --> ClassificationResult::EN
+//! println!("{:?}", language_detection.classify("shiyan")); // --> ClassificationResult::PY
+//! println!("{:?}", language_detection.classify("实验")); // --> ClassificationResult::ZH
 
 extern crate bincode;
 
 mod language_profiler;
 pub use self::language_profiler::Profiler as ChineseDetection;
+pub use self::language_profiler::ClassificationResult;
 
 #[cfg(test)]
 mod tests {
@@ -40,7 +40,7 @@ mod tests {
 					"student"];
 
 		for test in test_cases {
-			assert_eq!("EN", profiler.classify(test.to_string()));
+			assert_eq!(ClassificationResult::EN, profiler.classify(test));
 		}	
 	}
 
@@ -56,7 +56,7 @@ mod tests {
 					"xuesheng"];
 
 		for test in test_cases {
-			assert_eq!("PY", profiler.classify(test.to_string()));
+			assert_eq!(ClassificationResult::PY, profiler.classify(test));
 		}
 	}
 
@@ -72,7 +72,7 @@ mod tests {
 								"学生"];
 
 		for test in test_cases {
-			assert_eq!("ZH", profiler.classify(test.to_string()));
+			assert_eq!(ClassificationResult::ZH, profiler.classify(test));
 		}
 	}
 }
