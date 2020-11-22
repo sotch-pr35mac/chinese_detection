@@ -1,6 +1,6 @@
 [package]
 name = "chinese_detection"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>"]
 description = "Classify a string as either English, Chinese, or Pinyin."
 repository = "https://github.com/sotch-pr35mac/chinese_detection"

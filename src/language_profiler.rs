@@ -1,8 +1,6 @@
-/*
- * @author		:: Preston Wang-Stosur-Bassett
- * @date 		:: January 24, 2020
- * @description	:: This package classifies a string as Chinese characters, Pinyin, or English
- */
+// @author		:: Preston Wang-Stosur-Bassett
+// @date 		:: January 24, 2020
+// @description		:: This package classifies a string as Chinese characters, Pinyin, or English
 
 use bincode::deserialize_from;
 use std::collections::HashMap;
@@ -11,10 +9,14 @@ static CHINESE_DATA: &'static [u8] = include_bytes!("../profiles/zh.profile");
 static ENGLISH_DATA: &'static [u8] = include_bytes!("../profiles/en.profile");
 static PINYIN_DATA: &'static [u8] = include_bytes!("../profiles/py.profile");
 static GRAM_LENGTH: usize = 2;
-static CHINESE: &str = "ZH";
-static ENGLISH: &str = "EN";
-static PINYIN: &str = "PY";
-static UNCERTAIN: &str = "UN";
+
+#[derive(Debug, PartialEq)]
+pub enum ClassificationResult {
+	ZH, // Chinese
+	EN, // English
+	PY, // Pinyin
+	UN, // Uncertain
+}
 
 pub struct Profiler {
 	english_profile: HashMap<String, u64>,
@@ -54,7 +56,7 @@ impl Profiler {
 		return (occurances / total).log10() * -1 as f64;
 	}
 	
-	fn score(&self, sentence: &String, profile: &HashMap<String, u64>, total: &u64) -> f64 {
+	fn score(&self, sentence: &str, profile: &HashMap<String, u64>, total: &u64) -> f64 {
 		let mut accumulator: f64 = 0.0;
 		let words: Vec<_> = sentence.split(" ").collect();
 		for word in words {
@@ -73,19 +75,19 @@ impl Profiler {
 		return accumulator;
 	}
 
-	pub fn classify(&self, sentence: String) -> &str {
-		let english_score = &self.score(&sentence, &self.english_profile, &self.english_total);
-		let chinese_score = &self.score(&sentence, &self.chinese_profile, &self.chinese_total);
-		let pinyin_score = &self.score(&sentence, &self.pinyin_profile, &self.pinyin_total);
+	pub fn classify(&self, sentence: &str) -> ClassificationResult {
+		let english_score = &self.score(sentence, &self.english_profile, &self.english_total);
+		let chinese_score = &self.score(sentence, &self.chinese_profile, &self.chinese_total);
+		let pinyin_score = &self.score(sentence, &self.pinyin_profile, &self.pinyin_total);
 
 		if chinese_score < english_score && chinese_score < pinyin_score {
-			return CHINESE;
+			return ClassificationResult::ZH;
 		} else if pinyin_score < english_score && pinyin_score < chinese_score {
-			return PINYIN;
+			return ClassificationResult::PY;
 		} else if english_score < pinyin_score && english_score < chinese_score {
-			return ENGLISH;
+			return ClassificationResult::EN;
 		} else {
-			return UNCERTAIN;
+			return ClassificationResult::UN;
 		}
 	}
 }
