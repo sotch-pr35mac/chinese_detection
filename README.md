@@ -1,6 +1,5 @@
-# language_profiler
-##### v1.0.0
----
+# chinese_detection
+##### v2.0.0
 
 ### About
 Classify a string as either English, Chinese, or Pinyin. 
@@ -9,14 +8,11 @@ Classify a string as either English, Chinese, or Pinyin.
 ```rust
 extern crate chinese_detection;
 
-use chinese_detection::ChineseDetection;
-use chinese_detection::ClassificationResult;
+use chinese_detection::{ClassificationResult, classify};
 
-let language_detection = ChineseDetection::new();
-
-println!("{}", language_detection.classify("test")); // --> ClassificationResult::EN
-println!("{}", language_detection.classify("shiyan")); // --> ClassificationResult::PY
-println!("{}", language_detection.classify("实验")); // --> ClassificationResult::ZH
+assert_eq!(ClassificationResult::EN, classify("test"));
+assert_eq!(ClassificationResult::PY, classify("shiyan")); 
+assert_eq!(ClassificationResult::ZH, classify("实验")); 
 ```
 
 ### License
