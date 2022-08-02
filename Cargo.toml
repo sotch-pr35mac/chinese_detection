@@ -1,6 +1,6 @@
 [package]
 name = "chinese_detection"
-version = "2.0.0"
+version = "2.0.1"
 authors = ["Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>"]
 description = "Classify a string as either English, Chinese, or Pinyin."
 repository = "https://github.com/sotch-pr35mac/chinese_detection"
@@ -8,7 +8,7 @@ readme = "README.md"
 keywords = ["chinese", "hanzi", "classify", "english", "pinyin"]
 categories = ["text-processing", "localization", "internationalization", "value-formatting"]
 license = "MIT"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 bincode = "1.2.1"
