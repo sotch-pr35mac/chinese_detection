@@ -19,7 +19,7 @@ static CHINESE_TOTAL: Lazy<u64> = Lazy::new(|| calc_total(&CHINESE_DATA));
 static PINYIN_TOTAL: Lazy<u64> = Lazy::new(|| calc_total(&PINYIN_DATA));
 static GRAM_LENGTH: usize = 2;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Eq, PartialEq)]
 pub enum ClassificationResult {
     ZH, // Chinese
     EN, // English
